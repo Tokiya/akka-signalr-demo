@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div data-bind="visible: !isJoined()">
+    <h2>join Game</h2>
+
+    <form data-bind="submit: joinGame">
+        Character Name: <input required data-bind="value: newPlayerName" />
+        <button type="submit">Join Game</button>
+    </form>
+</div>
+
+<div data-bind="visible:isJoined">
+    <h2><span data-bind="text: thisPlayer().playerName"></span></h2>
+    <h3>Health</h3>
+    <p><span data-bind="text: thisPlayer().health"></span></p>
+    <h3 data-bind="visible:!thisPlayer().isAlive()" style="color:red"
+        >dead</h3>
+</div>
+
+<div data-bind="foreach: otherPlayers">
+    <hr/>
+    <p data-bind="text:playerName"></p>
+    <p data-bind="text:health"></p>
+
+    <div data-bind="visible:isAlive()">
+
+        <form data-bind="submit:attack">
+            <button type="submit">Attack</button>
+
+        </form>
+
+    </div>
+    <h4 data-bind="visible:!isAlive()">Dead</h4>
+</div>
+
+@section scripts{
+
+    <script>
+        var gamehub = $.connection.gameHub;
+
+        gamehub.client.playerJoined = function (playerName, health) {
+            var isMe = playerName === vm.newPlayerName();
+            if (isMe) {
+                vm.thisPlayer().playerName(playerName);
+                vm.thisPlayer().changeHealth(health);
+                vm.isJoined(true);
+            } else {
+                var playerExistsInList = ko.utils.arrayFirst(vm.otherPlayers(), function (player) {
+                    return playerName === player.playerName();
+                });
+                if (!playerExistsInList) {
+                    vm.otherPlayers.push(new PlayerViewModel(playerName, health));
+                }
+            }
+        };
+
+        gamehub.client.updatePlayerHealth = function (playerName, health) {
+            if (vm.thisPlayer().playerName() === playerName) {
+                vm.thisPlayer().changeHealth(health);
+            } else {
+                vm.otherPlayers().forEach(function (otherPlayer) {
+                    if (otherPlayer.playerName() === playerName) {
+                        otherPlayer.changeHealth(health);
+                    }
+                });
+            }
+        };
+
+        $.connection.hub.disconnected(function () {
+            setTimeout(function () {
+                $.connection.hub.start();
+            }, 5000);
+        });
+
+        $.connection.hub.start();
+
+        var PlayerViewModel = function (playerName, health) {
+
+            var self = this;
+            self.attack = function () {
+                gamehub.server.attack(self.playerName());
+            };
+
+            self.changeHealth = function (newhealth) {
+                self.health(newhealth);
+                if (self.health <= 0) {
+                    self.isAlive(false);
+                }
+            };
+
+            self.playerName = ko.observable(playerName);
+            self.isAlive = ko.observable(true);
+            self.health = ko.observable(NaN);
+
+            self.changeHealth(health);
+        };
+
+        var GameViewModel = function () {
+            var self = this;
+            self.newPlayerName = ko.observable('');
+            self.isJoined = ko.observable(false);
+
+            self.thisPlayer = ko.observable(new PlayerViewModel('', NaN));
+
+            self.otherPlayers = ko.observableArray().extend({
+                rateLimit: {
+                    timeout: 500,
+                    method: "notifyWhenChangesStop"
+                }
+            });
+
+            self.joinGame = function () {
+                gamehub.server.joinGame(self.newPlayerName());
+            };
+        };
+
+        var vm = new GameViewModel();
+        ko.applyBindings(vm);
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.ActorModel", "Game\Game.ActorModel.csproj", "{D64A9BC4-30AB-4CD3-97A3-0ADC175EEFF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Web", "Game.Web\Game.Web.csproj", "{0B2B9DD5-E162-4C97-9D2E-894731D3AB74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.State", "Game.State\Game.State.csproj", "{F7495DAF-60F6-47C8-A00D-08626B5319AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D64A9BC4-30AB-4CD3-97A3-0ADC175EEFF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D64A9BC4-30AB-4CD3-97A3-0ADC175EEFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D64A9BC4-30AB-4CD3-97A3-0ADC175EEFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D64A9BC4-30AB-4CD3-97A3-0ADC175EEFF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B2B9DD5-E162-4C97-9D2E-894731D3AB74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B2B9DD5-E162-4C97-9D2E-894731D3AB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B2B9DD5-E162-4C97-9D2E-894731D3AB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B2B9DD5-E162-4C97-9D2E-894731D3AB74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7495DAF-60F6-47C8-A00D-08626B5319AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7495DAF-60F6-47C8-A00D-08626B5319AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7495DAF-60F6-47C8-A00D-08626B5319AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7495DAF-60F6-47C8-A00D-08626B5319AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
